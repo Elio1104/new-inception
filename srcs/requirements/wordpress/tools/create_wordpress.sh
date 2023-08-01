@@ -17,9 +17,8 @@ else
 
 fi
 
-
-wp config create	--allow-root \
-					--dbname=$MYSQL_DATABASE \
+wp core download    --allow-root
+wp core config      --dbname=$MYSQL_DATABASE \
 					--dbuser=$MYSQL_USER \
 					--dbpass=$MYSQL_PASSWORD \
 					--dbhost=mariadb:3306 --path='/var/www/wordpress'
