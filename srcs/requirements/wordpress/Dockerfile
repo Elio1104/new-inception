@@ -20,5 +20,6 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY ./tools/create_wordpress.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/create_wordpress.sh
 
 CMD ["/usr/local/bin/create_wordpress.sh"]
