@@ -1,11 +1,15 @@
 FROM debian:buster
 
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install mariadb-server -y
+RUN apt-get update -y && apt-get install mariadb-server gettext moreutils -y
+COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/
+COPY ./conf/init.sql /var/lib/mysql/init.sql
+COPY ./conf/script.sh /var/lib/mysql/script.sh
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
-COPY ./tools/mariadb.sh /usr/local/bin/
-RUN chmod +x /etc/mysql/mariadb.conf.d/50-server.cnf
-RUN chmod +x /usr/local/bin/mariadb.sh
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld  &&  chmod +x /var/lib/mysql/script.sh
 
-CMD ["/usr/local/bin/mariadb.sh"]
+EXPOSE 3306
+
+ENTRYPOINT ["/var/lib/mysql/script.sh"]
+
+CMD ["mysqld", "--skip-grant-tables", "--init-file /var/lib/mysql/init.sql"]
