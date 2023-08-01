@@ -2,7 +2,7 @@
 
 wp core download    --allow-root
 echo "1"
-wp core config      --dbname=$MYSQL_DATABASE \
+wp config create    --dbname=$MYSQL_DATABASE \
 					--dbuser=$MYSQL_USER \
 					--dbpass=$MYSQL_PASSWORD \
 					--dbhost=mariadb:3306 --path='/var/www/wordpress' \
