@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set MYSQL_HOSTNAME=mariadb
-set MYSQL_DATABASE=wordpress
-set MYSQL_USER=alondot
-set MYSQL_PASSWORD=test1234
-set MYSQL_ROOT_PASSWORD=root1234
+export MYSQL_HOSTNAME=mariadb
+export MYSQL_DATABASE=wordpress
+export MYSQL_USER=alondot
+export MYSQL_PASSWORD=test1234
+export MYSQL_ROOT_PASSWORD=root1234
 
 service mysql start 
 
