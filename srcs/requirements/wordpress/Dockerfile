@@ -22,6 +22,7 @@ RUN chmod +x /usr/local/bin/create_wordpress.sh
 
 RUN mkdir -p /var/www/wordpress
 WORKDIR /var/www/wordpress
+COPY ./conf/wp-config.php ./
 
 ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
 

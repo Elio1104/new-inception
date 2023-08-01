@@ -2,7 +2,6 @@
 
 wp core download    --allow-root
 echo "1"
-cp wp-config-sample.php wp-config.php
 wp config create    --dbname=$MYSQL_DATABASE \
 					--dbuser=$MYSQL_USER \
 					--dbpass=$MYSQL_PASSWORD \
