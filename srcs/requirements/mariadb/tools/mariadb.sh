@@ -1,11 +1,5 @@
 #!/bin/bash
 
-export MYSQL_HOSTNAME=mariadb
-export MYSQL_DATABASE=wordpress
-export MYSQL_USER=alondot
-export MYSQL_PASSWORD=test1234
-export MYSQL_ROOT_PASSWORD=root1234
-
 service mysql start 
 
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
