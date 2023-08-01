@@ -33,8 +33,6 @@ services:
       - .env
     networks:
       - inception
-    expose:
-      - 9000
 
   mariadb:
     image: mariadb
@@ -49,12 +47,9 @@ services:
     restart: always
     env_file:
       - .env
-    expose:
-      - 3306
 
 networks:
   inception:
-    driver: bridge
 
 volumes:
   mariadb_data: 
