@@ -34,7 +34,7 @@ services:
     networks:
       - inception
     expose:
-      -"9000"
+      - 9000
 
   mariadb:
     image: mariadb
@@ -50,7 +50,7 @@ services:
     env_file:
       - .env
     expose:
-      -"9000"
+      - 3306
 
 networks:
   inception:
