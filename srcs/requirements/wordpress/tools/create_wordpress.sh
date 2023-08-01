@@ -7,7 +7,8 @@ else
 
 	wget http://wordpress.org/latest.tar.gz
 	tar xfz latest.tar.gz
-	mv wordpress/* .
+	mv wordpress/wp-config-sample.php .
+    rm -rf ./wordpress/
 
 	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
