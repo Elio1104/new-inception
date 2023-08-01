@@ -20,8 +20,9 @@ RUN mkdir /run/php
 COPY ./tools/create_wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/create_wordpress.sh
 
-ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
+RUN mkdir -p /var/www/wordpress
+WORKDIR /var/www/wordpress
 
-WORKDIR /var/www/html/
+ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
 
 CMD ["/usr/sbin/php-fpm7.3", "-F"]
