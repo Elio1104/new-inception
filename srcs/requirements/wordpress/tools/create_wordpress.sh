@@ -11,7 +11,4 @@ wp core install     --url=$DOMAIN_NAME --title=$SITE_TITLE --admin_user=$ADMIN_U
     
 wp user create      --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/wordpress' >> /log.txt
 
-rm ./wp-config.php
-mv ./config.php ./wp-config.php
-
 exec "$@"
