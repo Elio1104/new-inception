@@ -2,6 +2,7 @@ FROM debian:buster
 
 RUN apt-get update && apt-get upgrade && apt-get -y install \
 	wget \
+    curl \
     php7.3 \
     php-fpm \
     php-mysql \
