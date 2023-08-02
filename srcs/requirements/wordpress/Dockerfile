@@ -20,3 +20,5 @@ RUN chmod +x wp-conf.sh
 EXPOSE 9000
 
 ENTRYPOINT ["./script.sh"]
+
+CMD ["/usr/sbin/php-fpm7.3", "-F"]
