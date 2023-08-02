@@ -1,6 +1,4 @@
-#!/bin/sh
-
-echo "<?php
+<?php
 /**
  * The base configuration for WordPress
  *
@@ -22,7 +20,7 @@ echo "<?php
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', '$MYSQL_DATABASE');
+define( 'DB_NAME', '$MYSQL_DATABASE' );
 
 /** Database username */
 define( 'DB_USER', '$MYSQL_USER' );
@@ -31,7 +29,7 @@ define( 'DB_USER', '$MYSQL_USER' );
 define( 'DB_PASSWORD', '$MYSQL_PASSWORD' );
 
 /** Database hostname */
-define( 'DB_HOST', '$DB_HOST' );
+define( 'DB_HOST', 'DB_HOST' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -67,8 +65,7 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-" > wp-config.php
-echo '$table_prefix'" = 'wp_';
+$table_prefix = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -97,5 +94,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
-" >> wp-config.php
-./wp-conf.sh
