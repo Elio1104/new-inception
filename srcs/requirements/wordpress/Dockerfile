@@ -6,7 +6,7 @@ RUN apt-get update && apt-get upgrade && apt-get -y install \
     php-fpm \
     php-mysqli
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
 RUN mkdir /run/php
 
