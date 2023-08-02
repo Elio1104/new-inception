@@ -13,4 +13,3 @@ EXPOSE 3306
 ENTRYPOINT ["/var/lib/mysql/script.sh"]
 
 CMD ["mysqld", "--skip-grant-tables", "--init-file /var/lib/mysql/init.sql"]
-
