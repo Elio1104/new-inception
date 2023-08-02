@@ -2,69 +2,61 @@ version: '3'
 
 services:
 
-  nginx:
-    image: nginx:inception
-    build: 
-      context: ./requirements/nginx
-      dockerfile: Dockerfile
-    container_name: nginx
-    volumes:
-      - wordpress_data:/var/www/wordpress
-    ports:
-      - 443:443
-    depends_on:
-      - wordpress
-    env_file:
-      - .env
-    restart: always
-    networks: 
-      - inception
-
-  wordpress:
-    image: wordpress:inception
-    build: 
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
-    container_name: wordpress
-    restart: always
-    depends_on:
-      - mariadb
-    volumes:
-      - wordpress_data:/var/www/wordpress
-    env_file:
-      - .env
-    networks:
-      - inception
-
   mariadb:
     image: mariadb:inception
-    container_name: mariadb
     build:
       context: ./requirements/mariadb
-      dockerfile: Dockerfile
     working_dir: /var/lib/mysql
     volumes:
-      - mariadb_data:/var/lib/mysql
-    networks:
-      - inception
-    restart: always
+      - vol_mariadb:/var/lib/mysql
     env_file:
       - .env
+    networks:
+      - my_network
 
-networks:
-  inception:
-    driver: bridge
+  nginx:
+    image: nginx:inception
+    build:
+      context: ./requirements/nginx
+    ports:
+      - "443:443"
+    volumes:
+      - vol_wordpress:/var/www/wordpress
+    env_file:
+      - .env
+    networks:
+      - my_network
+    depends_on:
+      - wordpress
+    restart: always
+  
+  wordpress:
+    image: wordpress:inception
+    build:
+      context: ./requirements/wordpress
+    volumes:
+      - vol_wordpress:/var/www/wordpress
+    networks:
+      - my_network
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    restart: always
 
 volumes:
-  mariadb_data: 
+  vol_wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/alondot/data/mysql
+      device : /home/gmohimon/data/wordpress
       o: bind
-  wordpress_data:
+  vol_mariadb:
     driver: local
     driver_opts:
       type: none
-      device: /home/alondot/data/wordpress
+      device : /home/gmohimon/data/mariadb
       o: bind
+networks:
+  my_network:
+    driver: bridge
