@@ -2,61 +2,69 @@ version: '3'
 
 services:
 
-  mariadb:
-    image: mariadb:inception
-    build:
-      context: ./requirements/mariadb
-    working_dir: /var/lib/mysql
-    volumes:
-      - vol_mariadb:/var/lib/mysql
-    env_file:
-      - .env
-    networks:
-      - my_network
-
   nginx:
     image: nginx:inception
-    build:
+    build: 
       context: ./requirements/nginx
-    ports:
-      - "443:443"
+      dockerfile: Dockerfile
+    container_name: nginx
     volumes:
-      - vol_wordpress:/var/www/wordpress
-    env_file:
-      - .env
-    networks:
-      - my_network
+      - wordpress_data:/var/www/wordpress
+    ports:
+      - 443:443
     depends_on:
       - wordpress
-    restart: always
-  
-  wordpress:
-    image: wordpress:inception
-    build:
-      context: ./requirements/wordpress
-    volumes:
-      - vol_wordpress:/var/www/wordpress
-    networks:
-      - my_network
-    depends_on:
-      - mariadb
     env_file:
       - .env
     restart: always
+    networks: 
+      - inception
+
+  wordpress:
+    image: wordpress:inception
+    build: 
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/wordpress
+    env_file:
+      - .env
+    networks:
+      - inception
+
+  mariadb:
+    image: mariadb:inception
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    working_dir: /var/lib/mysql
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+    env_file:
+      - .env
+
+networks:
+  inception:
+    driver: bridge
 
 volumes:
-  vol_wordpress:
+  mariadb_data: 
     driver: local
     driver_opts:
       type: none
-      device : /home/gmohimon/data/wordpress
+      device: /home/alondot/data/mysql
       o: bind
-  vol_mariadb:
+  wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device : /home/gmohimon/data/mariadb
+      device: /home/alondot/data/wordpress
       o: bind
-networks:
-  my_network:
-    driver: bridge
