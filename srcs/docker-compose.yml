@@ -49,13 +49,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device : /home/alondot/data/wordpress
+      device : /home/gmohimon/data/wordpress
       o: bind
   vol_mariadb:
     driver: local
     driver_opts:
       type: none
-      device : /home/alondot/data/mariadb
+      device : /home/gmohimon/data/mariadb
       o: bind
 networks:
   my_network:
