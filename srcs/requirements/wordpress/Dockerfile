@@ -24,8 +24,6 @@ RUN mkdir -p /var/www/wordpress
 WORKDIR /var/www/wordpress
 COPY ./conf/wp-config.php /var/www/wordpress/
 
-ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
-
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
