@@ -1,5 +1,5 @@
 BLACK		:= $(shell tput -Txterm setaf 0)
-RED		:= $(shell tput -Txterm setaf 1)
+RED			:= $(shell tput -Txterm setaf 1)
 GREEN		:= $(shell tput -Txterm setaf 2)
 YELLOW		:= $(shell tput -Txterm setaf 3)
 LIGHTPURPLE	:= $(shell tput -Txterm setaf 4)
@@ -13,28 +13,21 @@ COMPOSE_FILE=./srcs/docker-compose.yml
 all: run
 
 run: 
-	@echo "$(GREEN)Building files for volumes ... $(RESET)"
+	@echo "$(BLUE)Building files for volumes ... $(RESET)"
 	@sudo mkdir -p /home/alondot/data/wordpress
 	@sudo mkdir -p /home/alondot/data/mysql
-	@echo "$(GREEN)Building containers ... $(RESET)"
+	@echo "$(BLUE)Building containers ... $(RESET)"
 	@docker-compose -f $(COMPOSE_FILE) up --build
 
 up:
-	@echo "$(GREEN)Building files for volumes ... $(RESET)"
+	@echo "$(BLUE)Building files for volumes ... $(RESET)"
 	@sudo mkdir -p /home/alondot/data/wordpress
 	@sudo mkdir -p /home/alondot/data/mysql
-	@echo "$(GREEN)Building containers in background ... $(RESET)"
+	@echo "$(BLUE)Building containers in background ... $(RESET)"
 	@docker-compose -f $(COMPOSE_FILE) up -d --build
 
-debug:
-	@echo "$(GREEN)Building files for volumes ... $(RESET)"
-	@sudo mkdir -p /home/alondot/data/wordpress
-	@sudo mkdir -p /home/alondot/data/mysql
-	@echo "$(GREEN)Building containers with log information ... $(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) --verbose up
-
 list:	
-	@echo "$(PURPLE)Listing all containers ... $(RESET)"
+	@echo "$(YELLOW)Listing all containers ... $(RESET)"
 	 docker ps -a
 
 list_volumes:
@@ -57,4 +50,4 @@ clean:
 	@sudo rm -rf /home/alondot/data/mysql
 	@echo "$(RED)Deleting all $(RESET)"
 
-.PHONY: run up debug list list_volumes clean
+.PHONY: run up list list_volumes clean
