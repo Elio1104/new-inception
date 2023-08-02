@@ -1,5 +1,6 @@
 #!/bin/bash
 
+wp core download    --allow-root
 wp theme install twentytwentyone --activate --allow-root
 wp core config		--dbname="$MYSQL_DATABASE"\
 					--dbuser="$MYSQL_USER" \
