@@ -1,11 +1,18 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get install -y nginx openssl gettext-base
+RUN apt-get update
+RUN apt-get install -y nginx \
+openssl \
+&& rm -rf /var/lib/apt/lists/*
 
-COPY ./conf/script.sh /etc/nginx/script.sh
+RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+        -out /etc/ssl/alondot.crt \
+        -keyout /etc/ssl/alondot.key \
+        -subj "/C=BE/ST=Bruxelles/L=Bruxelles/O=19 School/OU=alondot/CN=alondot/"
 
-RUN chmod +x /etc/nginx/script.sh && openssl genpkey -algorithm RSA -out /etc/nginx/server.key &&  openssl req -new -key /etc/nginx/server.key -out /etc/nginx/server.csr -subj "/CN=localhost" &&  openssl x509 -req -days 365 -in /etc/nginx/server.csr -signkey /etc/nginx/server.key -out /etc/nginx/server.crt
+RUN mkdir -p /run/nginx		
+COPY ./conf/nginx.conf /etc/nginx/conf.d
 
-EXPOSE 443
+EXPOSE	443
 
-ENTRYPOINT ["/etc/nginx/script.sh"]
+CMD	["nginx", "-g", "daemon off;"]
