@@ -8,23 +8,28 @@ BLUE		:= $(shell tput -Txterm setaf 6)
 WHITE		:= $(shell tput -Txterm setaf 7)
 RESET		:= $(shell tput -Txterm sgr0)
 
-COMPOSE_FILE=./srcs/docker-compose.yml
-
+COMPOSE_FILE=srcs/docker-compose.yml
 all: run
 
 run: 
 	@echo "$(BLUE)Building files for volumes ... $(RESET)"
-	@sudo mkdir -p /home/alondot/data/wordpress
-	@sudo mkdir -p /home/alondot/data/mysql
+
+	# Use the HOME environment variable, in makefile need to use two $$
+	@mkdir -p $$HOME/data/wordpress
+	@mkdir -p $$HOME/data/mysql
 	@echo "$(BLUE)Building containers ... $(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) up --build
+
+	# Use the new docker compose cli https://docs.docker.com/compose/reference/
+	@docker compose -f $(COMPOSE_FILE) up --build
 
 up:
 	@echo "$(BLUE)Building files for volumes ... $(RESET)"
-	@sudo mkdir -p /home/alondot/data/wordpress
-	@sudo mkdir -p /home/alondot/data/mysql
+
+	# Dont use sudo for mkdir, it will run the command as root and so create at `/root/data/...`
+	@mkdir -p $$HOME/data/wordpress
+	@mkdir -p $$HOME/data/mysql
 	@echo "$(BLUE)Building containers in background ... $(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) up -d --build
+	@docker compose -f $(COMPOSE_FILE) up -d --build
 
 list:	
 	@echo "$(YELLOW)Listing all containers ... $(RESET)"
@@ -36,7 +41,7 @@ list_volumes:
 
 clean: 	
 	@echo "$(RED)Stopping containers ... $(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) down
+	@docker compose -f $(COMPOSE_FILE) down
 	@-docker stop `docker ps -qa`
 	@-docker rm `docker ps -qa`
 	@echo "$(RED)Deleting all images ... $(RESET)"
@@ -46,8 +51,8 @@ clean:
 	@echo "$(RED)Deleting all network ... $(RESET)"
 	@-docker network rm `docker network ls -q`
 	@echo "$(RED)Deleting all data ... $(RESET)"
-	@sudo rm -rf /home/alondot/data/wordpress
-	@sudo rm -rf /home/alondot/data/mysql
+	@sudo rm -rf $$HOME/data/wordpress
+	@sudo rm -rf $$HOME/data/mysql
 	@echo "$(RED)Deleting all $(RESET)"
 
 .PHONY: run up list list_volumes clean

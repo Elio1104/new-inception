@@ -10,6 +10,9 @@ RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld  &&  chmod +x /var/
 
 EXPOSE 3306
 
+# If you chmod some file to user and group dont forget to switch user and group
+USER mysql:mysql
+
 ENTRYPOINT ["/var/lib/mysql/script.sh"]
 
 CMD ["mysqld", "--skip-grant-tables", "--init-file /var/lib/mysql/init.sql"]
