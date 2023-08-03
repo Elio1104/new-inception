@@ -58,11 +58,11 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: $HOME/data/mysql
+      device: /home/alondot/data/mysql
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: $HOME/data/wordpress
+      device: /home/alondot/data/wordpress
       o: bind

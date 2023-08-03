@@ -13,19 +13,13 @@ all: run
 
 run: 
 	@echo "$(BLUE)Building files for volumes ... $(RESET)"
-
-	# Use the HOME environment variable, in makefile need to use two $$
-	@mkdir -p $$HOME/data/wordpress
-	@mkdir -p $$HOME/data/mysql
+	@sudo mkdir -p /home/alondot/data/wordpress
+	@sudo mkdir -p /home/alondot/data/mysql
 	@echo "$(BLUE)Building containers ... $(RESET)"
-
-	# Use the new docker compose cli https://docs.docker.com/compose/reference/
 	@docker compose -f $(COMPOSE_FILE) up --build
 
 up:
 	@echo "$(BLUE)Building files for volumes ... $(RESET)"
-
-	# Dont use sudo for mkdir, it will run the command as root and so create at `/root/data/...`
 	@mkdir -p $$HOME/data/wordpress
 	@mkdir -p $$HOME/data/mysql
 	@echo "$(BLUE)Building containers in background ... $(RESET)"
@@ -42,17 +36,9 @@ list_volumes:
 clean: 	
 	@echo "$(RED)Stopping containers ... $(RESET)"
 	@docker compose -f $(COMPOSE_FILE) down
-	@-docker stop `docker ps -qa`
-	@-docker rm `docker ps -qa`
-	@echo "$(RED)Deleting all images ... $(RESET)"
-	@-docker rmi -f `docker images -qa`
-	@echo "$(RED)Deleting all volumes ... $(RESET)"
-	@-docker volume rm `docker volume ls -q`
-	@echo "$(RED)Deleting all network ... $(RESET)"
-	@-docker network rm `docker network ls -q`
-	@echo "$(RED)Deleting all data ... $(RESET)"
-	@sudo rm -rf $$HOME/data/wordpress
-	@sudo rm -rf $$HOME/data/mysql
+	@docker system prune -f --all --volumes
+	@sudo rm -rf /home/alondot/data/wordpress
+	@sudo rm -rf /home/alondot/data/mysql
 	@echo "$(RED)Deleting all $(RESET)"
 
 .PHONY: run up list list_volumes clean
